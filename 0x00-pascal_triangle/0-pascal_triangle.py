@@ -8,8 +8,6 @@ def pascal_triangle(n):
     """
     generate pascal's triangle depth 'n'
     """
-
-    i = 0
     if n <= 0:
         return []
     triangle = [[1]]
