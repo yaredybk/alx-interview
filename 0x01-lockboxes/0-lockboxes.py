@@ -26,6 +26,8 @@ def canUnlockAll(boxes):
     Returns:
         True if all boxes can be opened, else return False
     """
+    if type(boxes) is not list:
+        return False
     _max = len(boxes)
     _boxes = set(range(_max))
 
