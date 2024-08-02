@@ -62,3 +62,4 @@ def canUnlockAll(boxes):
         unlock_box_v2(0)
     return len(_boxes) == 0
 
+
