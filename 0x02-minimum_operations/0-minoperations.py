@@ -18,19 +18,22 @@ H => Copy All => Paste => HH => Paste =>HHH =>
 
 Number of operations: 6
 """
+from typing import Set
 
 
-def minOperations(n: int):
+def minOperations(n: int) -> int:
     """Minimum Operations."""
-    _primes = set([2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
+    _primes: Set[int] = set([2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53,
                   59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113,
                   127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181,
                   191, 193, 197, 199, 211, 223, 227, 229])
-    max_prime = 229
+    max_prime: int = 229
+    if n < 2:
+        return 0
     if n < 4:
         return n
 
-    def prime_factor(num):
+    def prime_factor(num: int) -> int:
         """Find least prime factor of num."""
         if num in _primes:
             return num
@@ -51,15 +54,16 @@ def minOperations(n: int):
                 _primes.add(tmp)
                 max_prime = tmp
                 if num % tmp == 0:
-                    return tmp
+                    break
             tmp += 1
+        return tmp
 
     factors = []
-    tmp = n
+    tmp: int = n
     while True:
         factor = prime_factor(tmp)
         factors.append(factor)
         if factor == tmp:
             break
-        tmp = tmp / factor
+        tmp = int(tmp / factor)
     return int(sum(factors))
