@@ -61,5 +61,5 @@ def minOperations(n: int):
         factors.append(factor)
         if factor == tmp:
             break
-        tmp /= factor
-    return int(sum(factors)
+        tmp = tmp / factor
+    return int(sum(factors))
