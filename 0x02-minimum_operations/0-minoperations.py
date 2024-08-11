@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""In a text file, there is a single character H.
+"""
+In a text file, there is a single character H.
 
 Your text editor can execute only two operations in this file:
 Copy All and Paste. Given a number n, write a method
@@ -23,24 +24,24 @@ from typing import Set, List
 
 def minOperations(n: int) -> int:
     """Minimum Operations."""
-    _primes: Set[int] = set([2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41,
-                             43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,
-                             101, 103, 107, 109, 113, 127, 131, 137, 139, 149,
-                             151, 157, 163, 167, 173, 179, 181, 192, 193, 197,
-                             199, 211, 223, 227, 229])
+    primes: Set[int] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41,
+                        43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,
+                        101, 103, 107, 109, 113, 127, 131, 137, 139, 149,
+                        151, 157, 163, 167, 173, 179, 181, 192, 193, 197,
+                        199, 211, 223, 227, 229}
     max_prime: int = 229
     if not isinstance(n, int):
         return 0
     if n < 2:
         return 0
-    if n < 4:
+    if n < 6:
         return n
 
     def prime_factor(num: int) -> int:
         """Find least prime factor of num."""
-        if num in _primes:
+        if num in primes:
             return num
-        for prime in _primes:
+        for prime in primes:
             if num % prime == 0:
                 return prime
         nonlocal max_prime
@@ -74,7 +75,7 @@ def minOperations(n: int) -> int:
     factors: List[int] = []
     tmp: int = n
     while True:
-        factor = prime_factor(tmp)
+        factor: int = prime_factor(tmp)
         factors.append(factor)
         if factor == tmp:
             break
