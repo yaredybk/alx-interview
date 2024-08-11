@@ -18,7 +18,7 @@ H => Copy All => Paste => HH => Paste =>HHH =>
 
 Number of operations: 6
 """
-from typing import Set
+from typing import Set, List
 
 
 def minOperations(n: int) -> int:
@@ -29,6 +29,8 @@ def minOperations(n: int) -> int:
                              151, 157, 163, 167, 173, 179, 181, 192, 193, 197,
                              199, 211, 223, 227, 229])
     max_prime: int = 229
+    if not isinstance(n, int):
+        return 0
     if n < 2:
         return 0
     if n < 4:
@@ -44,22 +46,32 @@ def minOperations(n: int) -> int:
         nonlocal max_prime
         if num < (max_prime * 3):
             return num
-        tmp = max_prime + 1
-        while num > (2 * tmp):
-            is_prime = True
-            for prime in _primes:
-                if tmp % prime == 0:
-                    is_prime = False
-                    break
-            if is_prime:
-                _primes.add(tmp)
-                max_prime = tmp
-                if num % tmp == 0:
-                    break
-            tmp += 1
+        tmp: int = max_prime + 1
+        # get a multiple of 6 as prime numbers follow a pattern ( 6n ± 1 )
+        while tmp % 6 != 0:
+            tmp -= 1
+        tmp -= 1
+        # loop counter
+        # uncommet for checking counter
+        # count: int = 0
+        while True:
+            # uncomment for checking counter
+            # count += 1
+            if num % tmp == 0:
+                tmp = prime_factor(tmp)
+                break
+            if num % (tmp + 2) == 0:
+                tmp = prime_factor(tmp + 2)
+                break
+            if (tmp * tmp) > num:
+                tmp = num
+                break
+            tmp += 6
+            # uncomment for checking counter
+            # print(f'iterated [{count}] times to get [{num}]')
         return tmp
 
-    factors = []
+    factors: List[int] = []
     tmp: int = n
     while True:
         factor = prime_factor(tmp)
