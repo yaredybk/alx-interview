@@ -49,10 +49,7 @@ def print_s() -> None:
             possible status code: 200, 301, 400, 401, 403, 404, 405 and 500
         total: int
             total file size
-
     """
-    status
-    total
     print(f'File size: {total}')
     for code, count in status.items():
         if count > 0:
@@ -86,3 +83,4 @@ def main() -> None:
 if __name__ == "__main__":
     """RUN."""
     main()
+
