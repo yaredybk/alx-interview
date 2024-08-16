@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """Log parsing.
 
 parsing and processing data streams in real-time. 
@@ -84,4 +84,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    """RUN."""
     main()
