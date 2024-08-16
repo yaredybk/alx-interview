@@ -34,13 +34,13 @@ def verfy_format(log_line: str) -> bool:
                 re.match(log_format[1], parts[1]))
 
 
-def stop():
+def stop() -> None:
     """Stop parsing."""
     print_s()
     raise KeyboardInterrupt
 
 
-def print_s():
+def print_s() -> None:
     """Print statistics.
 
     global variables used:
@@ -51,8 +51,8 @@ def print_s():
             total file size
 
     """
-    nonlocal status
-    nonlocal total
+    status
+    total
     print(f'File size: {total}')
     for code, count in status.items():
         if count > 0:
@@ -61,8 +61,8 @@ def print_s():
 
 def main() -> None:
     """Main stdin loop."""
-    nonlocal status
-    nonlocal total
+    global status
+    global total
     lines: int = 0
     signal.signal(signal.SIGINT, stop)
     for line in stdin:
@@ -78,7 +78,7 @@ def main() -> None:
             except ValueError:
                 pass
         if lines == 0:
-            print_s(status, total)
+            print_s()
             status = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0,
                       404: 0, 405: 0, 500: 0}
 
