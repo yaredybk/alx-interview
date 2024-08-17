@@ -10,10 +10,11 @@ if __name__ == '__main__':
 
     def print_stats():
         """ Print statistics """
-        print('File size: {}'.format(file_size[0]))
+        sys.stdout.write('File size: {}\n'.format(file_size[0]))
         for key in sorted(status_codes.keys()):
             if status_codes[key]:
-                print('{}: {}'.format(key, status_codes[key]))
+                sys.stdout.write('{}: {}\n'.format(key, status_codes[key]))
+        sys.stdout.flush()
 
     def parse_line(line):
         """ Checks the line for matches """
