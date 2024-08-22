@@ -38,9 +38,11 @@ def validUTF8(data):
         if shift < 2 or shift > 4:
             valid = False
             break
-        for i in range(shift - 1):
+        shift -= 1
+        for i in range(shift):
             val2 = data[i + 1] & 0xFF
             if val2 & 0b11000000 != 0b10000000:
                 valid = False
                 break
+        cursor += shift
     return valid
