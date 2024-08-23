@@ -14,7 +14,7 @@ def validUTF8(data):
     Return: True if data is a valid UTF-8 encoding, else return False
     """
     if len(data) == 0:
-        return False
+        return True
     valid = True
     cursor = 0
     length = len(data)
