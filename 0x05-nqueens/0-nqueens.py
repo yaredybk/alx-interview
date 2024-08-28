@@ -7,16 +7,19 @@ import sys
 
 
 if len(sys.argv) != 2:
-    print("Usage: nqueens N")
+    sys.stdout.write("Usage: nqueens N")
+    sys.stdout.flush()
     sys.exit(1)
 N = sys.argv[1]
 try:
     N = int(N)
 except ValueError:
-    print("N must be a number")
+    sys.stdout.write("N must be a number")
+    sys.stdout.flush()
     sys.exit(1)
 if N < 4:
-    print("N must be at least 4")
+    sys.stdout.write("N must be at least 4")
+    sys.stdout.flush()
     sys.exit(1)
 
 
@@ -54,9 +57,10 @@ if __name__ == "__main__":
     combo = [list(range(N))] * N
     if N % 2 == 1:
         N += 1
-    for x in range(N // 2):
-        for y in range(N // 2):
-            q = get_queens([x, y], [], combo[:])
+    for x in range(N):
+        a = min(x + 1, (N - x))
+        for y in range(a):
+            q = get_queens([y, x], [], combo[:])
             if q is not None:
                 qq = set([f'{a[0]}{a[1]}' for a in q])
                 if qq not in final:

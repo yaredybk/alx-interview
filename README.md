@@ -6,3 +6,9 @@ alx interview coding tasks
 Algorithm
 Python
  Weight: 1
+
+## 0x05. N Queens
+Algorithm
+Python
+ Weight: 1
+
