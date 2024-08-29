@@ -1,109 +1,68 @@
 #!/usr/bin/python3
-"""N queens problem.
-using back tracking."""
+"""N queens.
+
+using backtracking.
+"""
 import sys
 
 
-def is_valid(board, row, col):
-    """
-    Checks if a position of the queen is valid
-
-    Args:
-        board: 2D array representing the board
-        row: row of the queen
-        col: column of the queen
-
-    Returns:
-        Boolean: True if the position is valid, False otherwise
-    """
-    # Check this row on left side
-    if 1 in board[row]:
-        return False
-
-    upper_diag = zip(range(row, -1, -1),
-                     range(col, -1, -1))
-    for i, j in upper_diag:
-        if board[i][j] == 1:
-            return False
-
-    lower_diag = zip(range(row, len(board), 1),
-                     range(col, -1, -1))
-    for i, j in lower_diag:
-        if board[i][j] == 1:
-            return False
-
-    return True
+if len(sys.argv) != 2:
+    print("Usage: nqueens N")
+    sys.exit(1)
+N = sys.argv[1]
+try:
+    N = int(N)
+except ValueError:
+    print("N must be a number")
+    sys.exit(1)
+if N < 4:
+    print("N must be at least 4")
+    sys.exit(1)
 
 
-def nqueens_helper(board, col):
-    """
-    Helper function for nqueens
+def get_queens(test, valid, combo):
+    """Find N - 1 non-attacking queens to a queen placed at (x ,y)."""
+    combo[test[0]] = []
+    p = test[0] + test[1]
+    n = test[0] - test[1]
+    tmp_combo = []
+    for x_i, tmp in enumerate(combo):
+        new_c = [e for e in tmp if test[1] != e and
+                 p != (x_i + e) and n != (x_i - e)]
+        tmp_combo.append(new_c)
+    combo = tmp_combo
 
-    Args:
-        board: 2D array representing the board
-        col: column to start from
-
-    Returns:
-        Boolean: True if a solution is found, False otherwise
-    """
-    if col >= len(board):
-        print_board(board, len(board))
-    for i in range(len(board)):
-        if is_valid(board, i, col):
-            board[i][col] = 1
-            result = nqueens_helper(board, col + 1)
-            if result:
-                return True
-            board[i][col] = 0
-    return False
-
-
-def print_board(board, n):
-    """
-    Prints positions of the queens
-
-    Args:
-        board: 2D array representing the board
-        n: size of the board
-
-    Returns:
-        None
-    """
-    b = []
-
-    for i in range(n):
-        for j in range(n):
-            if board[i][j] == 1:
-                b.append([i, j])
-    print(b)
-
-
-def nqueens(n):
-    """
-    Finds all possible solutions to the n-queens problem
-
-    Args:
-        n: size of the board
-
-    Returns:
-        None
-    """
-    board = []
-    for i in range(n):
-        row = [0] * n
-        board.append(row)
-    nqueens_helper(board, 0)
+    left = sum([len(tmp) for tmp in combo])
+    valid.append(test)
+    # sys.stdout.write(f"...\nV:{valid}\nR:{combo}")
+    # sys.stdout.flush()
+    if len(valid) == N:
+        return valid
+    if left == 0 or left < N - len(valid):
+        return None
+    for x, li in enumerate(combo):
+        for y in li:
+            q2 = get_queens([x, y], valid[:], combo[:])
+            if q2 is not None and len(q2) == N:
+                return q2
+    return None
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
-        exit(1)
-    queens = sys.argv[1]
-    if not queens.isnumeric():
-        print("N must be a number")
-        exit(1)
-    elif int(queens) < 4:
-        print("N must be at least 4")
-        exit(1)
-    nqueens(int(queens))
+    """Check every combination"""
+    final = []
+    final_set = []
+    combo = [list(range(N))] * N
+    if N % 2 == 1:
+        N += 1
+    for x in range(N):
+        for y in range(N):
+            q = get_queens([x, y], [], combo[:])
+            if q is not None:
+                qq = set([f'{a[0]}{a[1]}' for a in q])
+                if qq not in final_set:
+                    final_set.append(qq)
+                    final.append(q)
+                    # sys.stdout.write(f'{str(q)}\n')
+                    # sys.stdout.flush()
+    [print(a) for a in final]
