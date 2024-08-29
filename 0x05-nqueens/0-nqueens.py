@@ -54,6 +54,7 @@ def get_queens(test, valid, combo):
 if __name__ == "__main__":
     """Check every combination"""
     final = []
+    final_set = []
     combo = [list(range(N))] * N
     if N % 2 == 1:
         N += 1
@@ -62,7 +63,9 @@ if __name__ == "__main__":
             q = get_queens([x, y], [], combo[:])
             if q is not None:
                 qq = set([f'{a[0]}{a[1]}' for a in q])
-                if qq not in final:
-                    final.append(qq)
-                    sys.stdout.write(f'{str(q)}\n')
-                    sys.stdout.flush()
+                if qq not in final_set:
+                    final_set.append(qq)
+                    final.append(q)
+                    # sys.stdout.write(f'{str(q)}\n')
+                    # sys.stdout.flush()
+    [print(a) for a in final]
