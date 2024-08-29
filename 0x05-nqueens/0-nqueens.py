@@ -1,71 +1,66 @@
 #!/usr/bin/python3
-"""N queens.
-
-using backtracking.
+"""
+    N-queen problem
+    The next algo solve any N queen in any NxN
+    Being N > 3
 """
 import sys
 
 
-if len(sys.argv) != 2:
-    sys.stdout.write("Usage: nqueens N")
-    sys.stdout.flush()
-    sys.exit(1)
-N = sys.argv[1]
-try:
-    N = int(N)
-except ValueError:
-    sys.stdout.write("N must be a number")
-    sys.stdout.flush()
-    sys.exit(1)
-if N < 4:
-    sys.stdout.write("N must be at least 4")
-    sys.stdout.flush()
-    sys.exit(1)
+def n_q(t_arr, arr, col, i, n):
+    """
+       n_q - Find all posibles solution for N-queen problem and return it
+             in a list
+       @t_arr: temporaly list to store the all points of a posible solution
+       @arr: store all the solution
+       @col: save a colum use for a queen
+       @i: the row of the chess table
+       @n: Number of queens
+    """
+    if (i > n):
+        arr.append(t_arr[:])
+        return arr
 
+    for j in range(n + 1):
+        if i == 0 or ([i - 1, j - 1] not in t_arr and
+                      [i - 1, j + 1] not in t_arr and
+                      j not in col):
+            if i > 1:
+                dia = 0
+                for k in range(2, i + 1):
+                    if ([i - k, j - k] in t_arr) or ([i - k, j + k] in t_arr):
+                        dia = 1
+                        break
+                if dia:
+                    continue
+            t_arr.append([i, j])
+            col.append(j)
+            n_q(t_arr, arr, col, i + 1, n)
+            col.pop()
+            t_arr.pop()
 
-def get_queens(test, valid, combo):
-    """Find N - 1 non-attacking queens to a queen placed at (x ,y)."""
-    combo[test[0]] = []
-    p = test[0] + test[1]
-    n = test[0] - test[1]
-    tmp_combo = []
-    for x_i, tmp in enumerate(combo):
-        new_c = [e for e in tmp if test[1] != e and
-                 p != (x_i + e) and n != (x_i - e)]
-        tmp_combo.append(new_c)
-    combo = tmp_combo
-
-    left = sum([len(tmp) for tmp in combo])
-    valid.append(test)
-    # sys.stdout.write(f"...\nV:{valid}\nR:{combo}")
-    # sys.stdout.flush()
-    if len(valid) == N:
-        return valid
-    if left == 0 or left < N - len(valid):
-        return None
-    for x, li in enumerate(combo):
-        for y in li:
-            q2 = get_queens([x, y], valid[:], combo[:])
-            if q2 is not None and len(q2) == N:
-                return q2
-    return None
+    return arr
 
 
 if __name__ == "__main__":
-    """Check every combination"""
-    final = []
-    final_set = []
-    combo = [list(range(N))] * N
-    if N % 2 == 1:
-        N += 1
-    for x in range(N):
-        for y in range(N):
-            q = get_queens([x, y], [], combo[:])
-            if q is not None:
-                qq = set([f'{a[0]}{a[1]}' for a in q])
-                if qq not in final_set:
-                    final_set.append(qq)
-                    final.append(q)
-                    # sys.stdout.write(f'{str(q)}\n')
-                    # sys.stdout.flush()
-    [print(a) for a in final]
+    if len(sys.argv) != 2:
+        print("Usage: nqueens N")
+        exit(1)
+
+    try:
+        n = int(sys.argv[1])
+    except BaseException:
+        print("N must be a number")
+        exit(1)
+
+    if not isinstance(n, int):
+        print("N must be a number")
+        exit(1)
+
+    elif n < 4:
+        print("N must be at least 4")
+        exit(1)
+
+    n_q_arr = n_q([], [], [], 0, n - 1)
+    for i in n_q_arr:
+        print(i)
