@@ -58,9 +58,8 @@ if __name__ == "__main__":
     if N % 2 == 1:
         N += 1
     for x in range(N):
-        a = min(x + 1, (N - x))
-        for y in range(a):
-            q = get_queens([y, x], [], combo[:])
+        for y in range(N):
+            q = get_queens([x, y], [], combo[:])
             if q is not None:
                 qq = set([f'{a[0]}{a[1]}' for a in q])
                 if qq not in final:
