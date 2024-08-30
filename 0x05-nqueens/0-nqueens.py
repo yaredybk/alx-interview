@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """N queens.
+:q
 
 using backtracking.
 """
@@ -55,8 +56,8 @@ if __name__ == "__main__":
     combo = [list(range(N))] * N
     if N % 2 == 1:
         N += 1
-    for x in range(N):
-        for y in range(N):
+    for x in range((N + 1) // 2):
+        for y in range((N + 1) // 2):
             q = get_queens([x, y], [], combo[:])
             if q is not None:
                 qq = set([f'{a[0]}{a[1]}' for a in q])
