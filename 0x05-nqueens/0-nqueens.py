@@ -60,7 +60,7 @@ def get_queens(test, valid, combo):
 
     if remaining == 0 or remaining < N - len(valid):
         return None
- 
+
     for x, li in enumerate(combo):
         for y in li:
             get_queens([x, y], valid[:], combo[:])
