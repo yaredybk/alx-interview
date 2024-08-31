@@ -90,8 +90,8 @@ if __name__ == "__main__":
                     final.append(qq)
                 # else:
                     # counter2 += 1
-    # [print(a) for a in final]
-    print(len(final))
+    [print(a) for a in final]
+    # print(len(final))
     # global counter
     # print("useless loops",counter)
     # print("similar positions",counter2)
