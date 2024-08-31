@@ -6,7 +6,7 @@ N non-attacking queens on an N×N chessboard
 
 Where:
     N is command line argument
-    
+
 example:
     >>> ./0-nqueens 4
     [[1, 0], [0, 2], [2, 3], [3, 1]]
@@ -34,7 +34,7 @@ result = []
 
 def get_queens(test, valid, combo):
     """Find N - 1 non-attacking queens to a queen placed at (x, y).
-    
+
     results are appended to global result variable
     """
     # remove vertical line of attack
