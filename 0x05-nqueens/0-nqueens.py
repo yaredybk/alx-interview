@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 """N queens.
-
-using backtracking.
 """
 import sys
 
@@ -18,20 +16,12 @@ except ValueError:
 if N < 4:
     print("N must be at least 4")
     sys.exit(1)
-# only for performace tests
-# counter = 0
-# counter2 = 0
 
-row_counter = [0 for _ in range(N)]
-
+checker = []
+final = []
 
 def get_queens(test, valid, combo):
     """Find N - 1 non-attacking queens to a queen placed at (x, y).
-
-    Returns:
-        Nested list of non-attacking queen's position
-        example:
-            [[0, 0], [1, 2], [2, 4], [3, 1], [4, 3]]
     """
     # remove vertical line of attack
     combo[test[0]] = []
@@ -46,51 +36,31 @@ def get_queens(test, valid, combo):
         tmp_combo.append(new_c)
     combo = tmp_combo
     valid.append(test)
-    left = sum([len(tmp) for tmp in combo])
-    if left == 0:
-        # REMOVED CONDITION B/C 'neglegible loop count'
-        # or left < N - len(valid):
-        if len(valid) == N:
-            return [valid]
-        # global counter
-        # counter += 1
-        return []
-    result = []
-    checker = []
+    remaining = sum([len(tmp) for tmp in combo])
+    if len(valid) == N:
+        tmp = set([str(a) for a in valid])
+        if tmp not in checker:
+            checker.append(tmp)
+            final.append(valid)
+        return None
+
+    if remaining == 0 or remaining < N - len(valid):
+        return None
+ 
     for x, li in enumerate(combo):
         for y in li:
-            q2 = get_queens([x, y], valid[:], combo[:])
-            for q3 in q2:
-                tmp = set([str(a) for a in q3])
-                if tmp not in checker:
-                    checker.append(tmp)
-                    result += q2
-                    row_counter[valid[0][0]] += 1
-                else:
-                    if row_counter[valid[0][0]] >= N:
-                        return result
-    return result
+            get_queens([x, y], valid[:], combo[:])
 
 
 if __name__ == "__main__":
     """Check every combination"""
-    final = []
-    final_set = []
     combo = [list(range(N))] * N
     if N % 2 == 1:
         NN = N + 1
     else:
         NN = N
     for x in range(N):
-        q = get_queens([x, 0], [], combo[:])
-        if len(q) > 0:
-            for qq in q:
-                qqq = set([str(a) for a in qq])
-                if qqq not in final_set:
-                    final_set.append(qqq)
-                    final.append(qq)
-                # else:
-                    # counter2 += 1
+        get_queens([x, 0], [], combo[:])
 
     [print(a) for a in final]
     # print(len(final))
