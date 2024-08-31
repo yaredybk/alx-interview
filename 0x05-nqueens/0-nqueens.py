@@ -73,8 +73,8 @@ if __name__ == "__main__":
         NN = N + 1
     else:
         NN = N
-    for x in range(N):
-        get_queens([x, 0], [], combo[:])
+    for y in range(N):
+        get_queens([0, y], [], combo[:])
 
     [print(a) for a in result]
     # print(len(result))
