@@ -22,6 +22,8 @@ if N < 4:
 # counter = 0
 # counter2 = 0
 
+row_counter = [0 for _ in range(N)]
+
 
 def get_queens(test, valid, combo):
     """Find N - 1 non-attacking queens to a queen placed at (x, y).
@@ -54,11 +56,19 @@ def get_queens(test, valid, combo):
         # counter += 1
         return []
     result = []
+    checker = []
     for x, li in enumerate(combo):
         for y in li:
             q2 = get_queens([x, y], valid[:], combo[:])
-            if len(q2) > 0:
-                result += q2
+            for q3 in q2:
+                tmp = set([str(a) for a in q3])
+                if tmp not in checker:
+                    checker.append(tmp)
+                    result += q2
+                    row_counter[valid[0][0]] += 1
+                else:
+                    if row_counter[valid[0][0]] >= N:
+                        return result
     return result
 
 
