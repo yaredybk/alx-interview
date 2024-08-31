@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """N queens.
-:q
 
 using backtracking.
 """
@@ -19,55 +18,48 @@ except ValueError:
 if N < 4:
     print("N must be at least 4")
     sys.exit(1)
-# print("N",N)
+# only for performace tests
+# counter = 0
+# counter2 = 0
+
 
 def get_queens(test, valid, combo):
-    """Find N - 1 non-attacking queens to a queen placed at (x ,y)."""
-    # print(test, ":", valid)
-    # if test[0] == 0 and test[1] == 1:
-        # print(test, valid)
-    # if len(valid) > 1 and valid[0][0] == 0 and valid[0][1] == 1:
-        # print("TEST",test)
-        # print(valid, combo)
+    """Find N - 1 non-attacking queens to a queen placed at (x, y).
+
+    Returns:
+        Nested list of non-attacking queen's position
+        example:
+            [[0, 0], [1, 2], [2, 4], [3, 1], [4, 3]]
+    """
+    # remove vertical line of attack
     combo[test[0]] = []
+    # find offset for diagonal attack
     p = test[0] + test[1]
     n = test[0] - test[1]
     tmp_combo = []
+    # remove horizontal and diagonal line of attack
     for x_i, tmp in enumerate(combo):
-        new_c = [e for e in tmp if test[1] != e and
-                 p != (x_i + e) and n != (x_i - e)]
+        new_c = [y for y in tmp if test[1] != y and
+                 p != (x_i + y) and n != (x_i - y)]
         tmp_combo.append(new_c)
-    # combo = tmp_combo
-
-    left = sum([len(tmp) for tmp in tmp_combo])
-    valid.append(test)
-    # sys.stdout.write(f"...\nV:{valid}\nR:{combo}")
-    # sys.stdout.flush()
-    if len(valid) == N:
-        #if len(valid) > 1 and valid[0][0] == 0 and valid[0][1] == 1:
-            # print(test, ":", valid, "!", len(valid))
-        return valid
-    if left == 0 or left < N - len(valid):
-        #if test[0] == 2 and len(valid) > 1 and valid[0][0] == 0 and valid[0][1] == 1:
-            # print("left=0 | left < N - valid")
-            # print(left, N, len(valid), N - len(valid))
-            # print("test", test)
-            # print("valid", valid)
-            # print("old combo", combo)
-            # print("new combo",tmp_combo)
-        return None
     combo = tmp_combo
+    valid.append(test)
+    left = sum([len(tmp) for tmp in combo])
+    if left == 0:
+        # REMOVED CONDITION B/C 'neglegible loop count'
+        # or left < N - len(valid):
+        if len(valid) == N:
+            return [valid]
+        # global counter
+        # counter += 1
+        return []
+    result = []
     for x, li in enumerate(combo):
         for y in li:
             q2 = get_queens([x, y], valid[:], combo[:])
-            #if test[0] == 0 and test[1] == 1:
-                # print([x, y], q2, combo)
-            if q2 is not None and len(q2) == N:
-                # print(test, ":", q2, "!", len(q2))
-                return q2
-    #if len(valid) > 0 and valid[0][0] == 0 and valid[0][1] == 1:
-        # print(q2, "None")
-    return None
+            if len(q2) > 0:
+                result += q2
+    return result
 
 
 if __name__ == "__main__":
@@ -79,14 +71,19 @@ if __name__ == "__main__":
         NN = N + 1
     else:
         NN = N
-    for x in range((NN + 1) // 2):
-        for y in range((NN + 1) // 2):
+    for x in range(N):
+        for y in range(N):
             q = get_queens([x, y], [], combo[:])
-            if q is not None:
-                qq = set([f'{a[0]}{a[1]}' for a in q])
-                if qq not in final_set:
-                    final_set.append(qq)
-                    final.append(q)
-                    # sys.stdout.write(f'{str(q)}\n')
-                    # sys.stdout.flush()
+            if len(q) > 0:
+                for qq in q:
+                    qqq = set([str(a) for a in qq])
+                    if qqq not in final_set:
+                        final_set.append(qqq)
+                        final.append(qq)
+                    # else:
+                        # counter2 += 1
     [print(a) for a in final]
+    # print(len(final))
+    # global counter
+    # print("useless loops",counter)
+    # print("similar positions",counter2)
