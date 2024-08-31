@@ -79,17 +79,9 @@ if __name__ == "__main__":
                 if qqq not in final_set:
                     final_set.append(qqq)
                     final.append(qq)
-
-    for y in range(N - 1):
-        q = get_queens([0, y + 1], [], combo[:])
-        if len(q) > 0:
-            for qq in q:
-                qqq = set([str(a) for a in qq])
-                if qqq not in final_set:
-                    final_set.append(qqq)
-                    final.append(qq)
                 # else:
                     # counter2 += 1
+
     [print(a) for a in final]
     # print(len(final))
     # global counter
