@@ -1,5 +1,16 @@
 #!/usr/bin/python3
 """N queens.
+
+prints the positions of
+N non-attacking queens on an N×N chessboard
+
+Where:
+    N is command line argument
+    
+example:
+    >>> ./0-nqueens 4
+    [[1, 0], [0, 2], [2, 3], [3, 1]]
+    [[2, 0], [0, 1], [1, 3], [3, 2]]
 """
 import sys
 
@@ -18,10 +29,13 @@ if N < 4:
     sys.exit(1)
 
 checker = []
-final = []
+result = []
+
 
 def get_queens(test, valid, combo):
     """Find N - 1 non-attacking queens to a queen placed at (x, y).
+    
+    results are appended to global result variable
     """
     # remove vertical line of attack
     combo[test[0]] = []
@@ -41,7 +55,7 @@ def get_queens(test, valid, combo):
         tmp = set([str(a) for a in valid])
         if tmp not in checker:
             checker.append(tmp)
-            final.append(valid)
+            result.append(valid)
         return None
 
     if remaining == 0 or remaining < N - len(valid):
@@ -62,8 +76,8 @@ if __name__ == "__main__":
     for x in range(N):
         get_queens([x, 0], [], combo[:])
 
-    [print(a) for a in final]
-    # print(len(final))
+    [print(a) for a in result]
+    # print(len(result))
     # global counter
     # print("useless loops",counter)
     # print("similar positions",counter2)
