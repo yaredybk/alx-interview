@@ -11,14 +11,14 @@
  */
 const request = require('request');
 
-if (process.argv.length < 3){
-  throw('Usage: ./0-starwars_characters.js <Movie ID>');
+if (process.argv.length < 3) {
+  throw new Error('Usage: ./0-starwars_characters.js <Movie ID>');
 }
 
 const movieId = Number(process.argv[2]);
 
 if (isNaN(movieId)) {
-  throw('<Movie ID> must be number');
+  throw new Error('<Movie ID> must be number');
 }
 
 const baseUrl = 'https://swapi-api.alx-tools.com/api/';
@@ -27,32 +27,33 @@ request(`${baseUrl}films/${movieId}/`, (error, response, body) => {
     console.error('Error:\n', error);
   } else {
     const data = JSON.parse(body);
-    char_urls = data.characters
-    get_all_name(char_urls, 0);
+    if (data.characters) {
+      getAllName(data.characters, 0);
     }
+  }
 });
 
-async function get_name(charUrl) {
+async function getName (charUrl) {
   return new Promise((resolve, reject) => {
     request(charUrl, (error, response, body) => {
-        if (error) {
-          reject('Error:\n', error);
-        } else {
-          const data = JSON.parse(body);
-          resolve(data.name)
-        }
+      if (error) {
+        reject(error);
+      } else {
+        const data = JSON.parse(body);
+        resolve(data.name);
+      }
     });
-  })
+  });
 }
 
-function get_all_name(char_urls, ind) {
-  if (char_urls[ind]) {
-    get_name(char_urls[ind]).then((name) => {
+function getAllName (charUrls, ind) {
+  if (charUrls[ind]) {
+    getName(charUrls[ind]).then((name) => {
       console.log(name);
-    }).catch((error) => {
-      console.warn(`error @INDEX:${ind}`)
+    }).catch(() => {
+      console.warn(`error @INDEX:${ind}`);
     }).finally(() => {
-      get_all_name(char_urls, ++ind);
-    })
+      getAllName(charUrls, ++ind);
+    });
   }
 }
