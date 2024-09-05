@@ -1,0 +1,23 @@
+{
+  "name": "0x06-starwars_api",
+  "version": "1.0.0",
+  "description": "prints all characters of a Star Wars movie",
+  "main": "0-starwars_characters.js",
+  "scripts": {
+    "test": "./0-starwars_characters.js 3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yaredybk/alx-interview/0x06-starwars_api"
+  },
+  "keywords": [
+    "starwars-api",
+    "api",
+    "javascript"
+  ],
+  "author": "yared b.",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.88.2"
+  }
+}
