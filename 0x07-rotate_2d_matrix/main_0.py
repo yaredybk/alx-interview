@@ -9,5 +9,6 @@ if __name__ == "__main__":
               [4, 5, 6],
               [7, 8, 9]]
 
+    [print(a) for a in matrix]
     rotate_2d_matrix(matrix)
-    print(matrix)
+    [print(a) for a in matrix]
