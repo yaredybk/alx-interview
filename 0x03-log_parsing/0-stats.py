@@ -10,10 +10,11 @@ if __name__ == '__main__':
 
     def print_stats():
         """ Print statistics """
-        sys.stdout.write('File size: {}\n'.format(file_size[0]))
+        tmp = f'File size: {file_size[0]}\n'
         for key in sorted(status_codes.keys()):
             if status_codes[key]:
-                sys.stdout.write('{}: {}\n'.format(key, status_codes[key]))
+                tmp += '{}: {}\n'.format(key, status_codes[key])
+        sys.stdout.write(tmp)
         sys.stdout.flush()
 
     def parse_line(line):
@@ -41,4 +42,3 @@ if __name__ == '__main__':
             linenum += 1
     except KeyboardInterrupt:
         print_stats()
-        raise
