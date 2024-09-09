@@ -9,7 +9,7 @@ def rotate_2d_matrix(matrix):
     Do not return anything. The matrix must be edited in-place.
     You can assume the matrix will have 2 dimensions and will not be empty."""
     l = len(matrix)
-    r = range(matrix)
+    r = range(l)
     def swap(i, j):
         """swap elements of a matrix inplace"""
         matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
