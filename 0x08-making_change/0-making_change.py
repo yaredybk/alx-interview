@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-from typing import List
 """Change comes from within
 
 Given a pile of coins of different values,
@@ -17,7 +16,7 @@ Your solution’s runtime will be evaluated in this task
 """
 
 
-def makeChange(coins: List[int], total: int) -> int:
+def makeChange(coins, total):
     """Find the fewest number of coins needed to meet a given total.
 
     this is the first iteration.
