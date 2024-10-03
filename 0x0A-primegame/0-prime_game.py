@@ -19,6 +19,8 @@ def isWinner(x, nums):
     Assuming Maria always goes first and both players play optimally,
     determine who the winner of each game is."""
 
+    if x == 0:
+        return "Ben"
     def prime_factors(num):
         """Get prime factors of a number"""
         primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41,
