@@ -43,7 +43,7 @@ def isWinner(x, nums):
                 if num % prime == 0:
                     return False
             return True
- 
+
         factors = list(primes)
         tmp = num
         while tmp % 6 != 0:
@@ -67,4 +67,4 @@ def isWinner(x, nums):
         return "Maria"
     elif score < 0:
         return "Ben"
-    return None
+    return "None"
